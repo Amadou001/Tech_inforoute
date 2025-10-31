@@ -1,0 +1,7 @@
+[client]
+Host=localhost
+port=3306
+database=Canwin
+user=Amadou
+password =Amadou2302&
+default-character-set = utf8
