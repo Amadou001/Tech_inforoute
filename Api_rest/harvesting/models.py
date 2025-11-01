@@ -14,6 +14,8 @@ class Organization(models.Model):
     created_at = models.DateTimeField(null=True, blank=True)
     updated_at = models.DateTimeField(null=True, blank=True)
 
+    def __str__(self):
+        return f"[{self.name}] {self.title}"
 
 
 
@@ -56,6 +58,8 @@ class Ressource(models.Model):
     url = models.TextField(blank=True, null=True)
     url_type = models.CharField(max_length=100, blank=True, null=True)
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, related_name='ressources')
+    def __str__(self):
+        return f"[{self.name}]"
 
 class Tag(models.Model):
     """
@@ -64,3 +68,5 @@ class Tag(models.Model):
     tag_id = models.CharField(max_length=200, unique=True)
     name = models.CharField(max_length=255)
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, related_name='tags')
+    def __str__(self):
+        return f"[{self.name}]"

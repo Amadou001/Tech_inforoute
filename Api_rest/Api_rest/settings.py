@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'graphene_django',
+    'users',
+    'rest_framework.authtoken',
+    'drf_yasg',
+    "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
 
 ]
 
@@ -131,5 +135,46 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
-    "SCHEMA": "api.schema.schema"
+    "SCHEMA": "api.schema.schema",
+    "MIDDLEWARE": [
+        "graphql_jwt.middleware.JSONWebTokenMiddleware",
+    ],
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Require token for all views
+    ],
+}
+
+AUTHENTICATION_BACKENDS = [
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'Format: Token <your_token>',
+        }
+    },
+}
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'User API',
+    'DESCRIPTION': 'API endpoints for user registration, login, logout, and deletion',
+    'VERSION': '1.0.0',
+}
+
+# GraphQL JWT Settings (optional)
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,
+    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
 }
