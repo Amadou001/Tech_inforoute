@@ -16,7 +16,7 @@ admin.site.register(Tag)
 
 
 @admin.action(description='Fetch data from CanWin source')
-def run_custom_command(modeladmin, request):
+def run_custom_command(modeladmin, request, queryset):
     call_command('fetch_data')  # call your management command
     modeladmin.message_user(request, "Data fetched from CanWin source successfully.")
 
