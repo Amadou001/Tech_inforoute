@@ -20,7 +20,7 @@ Ce projet a été développé dans le cadre du cours **INF37407** et consiste à
 ---
 
 ## 🏗️ Structure du projet
-
+```
 Tech_inforoute/
 │
 ├── manage.py
@@ -51,7 +51,7 @@ Tech_inforoute/
 ├── serializers.py
 ├── urls.py
 └── permissions.py
-
+```
 ---
 
 ## ⚙️ Installation et configuration
