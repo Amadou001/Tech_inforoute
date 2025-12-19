@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 import requests
 from django.http import HttpResponse
+from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, permission_classes
@@ -204,4 +205,25 @@ def login_page(request):
         else:
             return HttpResponse(f"Error: {response.json()}")
     return render(request, 'users/login.html')
+
+
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def current_user(request):
+    user = request.user
+
+    if request.method == 'GET':
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    if request.method == 'PUT':
+        serializer = UserSerializer(
+            user,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
